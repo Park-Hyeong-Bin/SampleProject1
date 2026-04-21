@@ -30,7 +30,7 @@ int main() {
     int poisonResist = 0;
     bool isHardcore = false;
 
-    
+    /*
     cout << "hp 변수의 값" << hp << "\n"; 
     cout << "hp 변수의 주소 값" << &hp << "\n"; //변수의 주소값 출력 & 앰퍼센트 연산자 사용
 
@@ -43,6 +43,50 @@ int main() {
     cout << "hp 변수의 값" << hp << "\n";
     cout << "*ptr 값" << *ptr << "\n";
     system("pause"); // 
+    */
+    /*
+    int* ptr2 = nullptr;//포인터 초기화
+    cout << "*ptr2 값" << *ptr2 << "\n";
+    */
+
+    /*
+    //변수와 포인터의 크기확인
+    cout << "sizeof(int)" << sizeof(int) << "\n";
+    cout << "sizeof(int*)" << sizeof(int*) << "\n";
+    cout << "sizeof(double)" << sizeof(double) << "\n";
+    cout << "sizeof(double*)" << sizeof(double*) << "\n";
+    cout << "sizeof(char*)" << sizeof(char*) << "\n";
+
+    //포인터 연산(+1 = 자료형 메모리 크기만큼 이동)
+    cout << "ptr :" << ptr << "\n";
+    cout << "ptr+1(주소값에 +1) :" << ptr + 1 << "\n";
+    cout << "ptr+2 :" << ptr + 2 << "\n";
+    system("pause");
+    */
+
+
+    //배열에 포인트를 주었을 경우
+    int score[5] = { 85,92,78,46,50 };
+    cout << " score[0] : " << score[0] << "\n";
+    cout << " & score[0] : " << &score[0] << "\n";
+    cout << " score[1] : " << score[1] << "\n";
+    cout << " & score[1] : " << &score[1] << "\n";
+    cout << " score[2] : " << score[2] << "\n";
+    cout << " & score[2] : " << &score[2] << "\n";
+    cout << " score[3] : " << score[3] << "\n";
+    cout << " & score[3] : " << &score[3] << "\n";
+    cout << " score[4] : " << score[4] << "\n";
+    cout << " & score[4] : " << &score[4] << "\n";
+    system("pause");
+    
+    cout << "score : " << score << "\n";//배열 이름
+    cout << "&score[0] : " << &score[0] << "\n";//첫 원소 주소
+    cout << "score[2] : " << score[2] << "\n";//인덱스로 접근
+    cout << "*(score+2) : " << *(score+2) << "\n";// 포인터 연산
+
+    //배열 포인터
+    
+    system("pause");
 
 
     // --- [ PAGE 1 : Intro ] ---
