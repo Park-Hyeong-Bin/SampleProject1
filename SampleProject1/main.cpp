@@ -109,6 +109,32 @@ int main() {
     }
 
     system("pause");
+    nextPhase();
+
+    //야생 포인터 변수 선언시 안전한 초기화 예시문
+    int* wildPtr = nullptr;//안전한 초기화를 위한 nullptr을 넣어서 사용
+    if (wildPtr != nullptr) {
+        *wildPtr = 100; //crash
+    }//이런 형태로 null체크를 해야함
+    cout << "wildPtr : " << wildPtr << "\n"; //0
+
+    system("pause");
+    nextPhase();
+
+
+    //허상 포인터 주의 이런 포인터가 발생하면 크래시가 남
+    
+    int* danglePtr = new int(100);
+    cout << "삭제 전  : " << *danglePtr << "\n";
+    delete danglePtr;//메모리 해제, 삭제
+    //*danglePtr = 200;//해제된 메모리에 할당 //런타임 오류 발생, 크래시 발생!
+    danglePtr = nullptr;//안전하게 처리
+
+    cout << "삭제 후" << *danglePtr << "\n";
+ 
+
+    system("pause");
+    nextPhase();
 
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
