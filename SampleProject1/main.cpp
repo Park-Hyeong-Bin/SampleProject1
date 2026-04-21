@@ -98,7 +98,17 @@ int main() {
     cout << "&score+1 : " << &score + 1 << "\n";//주소로 접근해서 다음 배열을 가리키게됨
 
     system("pause");
+    nextPhase();
+    //for 반복문을 통한 배열 순환
+    int* sPtr = score;
+    for (int i = 0; i < 5;i++) {
+        cout << "score[" << i << "]의 주소와 값\n";
+        cout << "주소 : " << sPtr << "\n";
+        cout << " 값  : " << *sPtr << "\n";
+        sPtr++;
+    }
 
+    system("pause");
 
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
