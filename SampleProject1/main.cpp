@@ -30,6 +30,11 @@ int main() {
     int poisonResist = 0;
     bool isHardcore = false;
 
+    //인벤토리 생성(0 = 빈칸, 1 = gold, 2 = healing potion, 3 = weapon 4 = armor)
+    int gameInventory[5] = { 0,0,0,0,0 };
+
+
+
     /*
     cout << "hp 변수의 값" << hp << "\n"; 
     cout << "hp 변수의 주소 값" << &hp << "\n"; //변수의 주소값 출력 & 앰퍼센트 연산자 사용
@@ -44,6 +49,7 @@ int main() {
     cout << "*ptr 값" << *ptr << "\n";
     system("pause"); // 
     */
+ 
     /*
     int* ptr2 = nullptr;//포인터 초기화
     cout << "*ptr2 값" << *ptr2 << "\n";
@@ -163,7 +169,7 @@ int main() {
     cout << "\nHardcore Mode? (1: Yes / 2: No): ";
     cin >> hardcoreinput;
     isHardcore = (hardcoreinput == 1);
-
+    
     nextPhase();
 
     // --- [ PAGE 2 : Status ] ---
@@ -236,10 +242,32 @@ int main() {
         cout << "   VICTORY! You defeated the Goblin!           \n";
         cout << "************************************************\n";
 
-        srand((unsigned int)time(NULL));
+
+        //포인터로 인벤토리에 랜덤 숫자 저장
+        int* invPtr = gameInventory; // invPtr -> gameInventory 시작주소 [0];
+        
         for (int i = 1; i <= 3; i++) {
-            string items[] = { "Gold", "Health Potion", "Old Sword", "Shield" };
-            cout << "  Looting... found: [" << items[rand() % 4] << "]\n";
+            *invPtr = rand() % 4 + 1;
+            invPtr++;
+        }
+
+        //포인터 순회로 인벤토리 출력(5칸)
+        invPtr = gameInventory; //invPtr 처음으로 리셋
+        int slot = 0;
+
+        cout << "************************************************\n";
+        cout << "   아이템을 획득합니다!           \n";
+        cout << "************************************************\n";
+        while (invPtr < gameInventory + 5) {
+            string itemName;
+            if (*invPtr == 1) itemName = "골드";
+            else if (*invPtr == 2) itemName = "회복 포션";
+            else if (*invPtr == 3) itemName = "무기";
+            else if (*invPtr == 4) itemName = "갑옷";
+            else itemName = "None";
+            cout << "> Slot" << slot << "[" << itemName << "]\n";
+            invPtr++;
+            slot++;
         }
     }
 
