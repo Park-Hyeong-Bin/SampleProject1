@@ -84,8 +84,19 @@ int main() {
     cout << "score[2] : " << score[2] << "\n";//인덱스로 접근
     cout << "*(score+2) : " << *(score+2) << "\n";// 포인터 연산
 
-    //배열 포인터
+    //형변환의 예외 상황
+    cout << "sizeof(score) : " << sizeof(score) << "\n";
+    cout << "sizeof(score[0]) : " << sizeof(score[0]) << "\n";
+    cout << "sizeof(score)/sizeof(score[0]) : " << sizeof(score)/sizeof(score[0]) << "\n";
+    system("pause");
     
+    
+    //형변환의 예외 상황2
+    cout << "score : " << score << "\n";//시작주소
+    cout << "score+1 : " << score + 1 << "\n";//시작주소가 원소를 가리켜서 다음원소의 주소값을 가리킴
+    cout << "&score : " << &score << "\n";//시작주소
+    cout << "&score+1 : " << &score + 1 << "\n";//주소로 접근해서 다음 배열을 가리키게됨
+
     system("pause");
 
 
