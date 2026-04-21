@@ -30,6 +30,11 @@ int main() {
     int poisonResist = 0;
     bool isHardcore = false;
 
+    
+    cout << "hp 변수의 값" << hp << "\n"; 
+    cout << "hp 변수의 주소 값" << &hp << "\n"; //변수의 주소값 출력 & 앰퍼센트 연산자 사용
+    system("pause"); // 
+
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
     cout << "################################################\n";
