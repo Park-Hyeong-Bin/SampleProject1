@@ -64,7 +64,7 @@ int main() {
     system("pause");
     */
 
-
+    /*
     //배열에 포인트를 주었을 경우
     int score[5] = { 85,92,78,46,50 };
     cout << " score[0] : " << score[0] << "\n";
@@ -135,6 +135,7 @@ int main() {
 
     system("pause");
     nextPhase();
+    */
 
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
