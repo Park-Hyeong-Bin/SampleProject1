@@ -13,6 +13,14 @@ void nextPhase() {
     system("cls"); // Windows 전용 화면 지우기 (Mac/Linux는 "clear")
 }
 
+// Call by Value
+void PreviewCritical(float attackDamage) {
+    attackDamage *= 2;
+
+    cout << attackDamage <<"\n";// 복사본만 두배
+   
+}
+
 int main() {
     char userName[50];
     string charactorClass;
@@ -143,6 +151,14 @@ int main() {
     nextPhase();
     */
 
+    //변수를 통한 함수 호출 테스트
+    cout <<"원본데미지 : " << attackDamage << "\n";
+    cout << "크리데미지 : ";
+    PreviewCritical(attackDamage);
+    cout << "함수 호출 후 데미지 : "<< attackDamage << "\n";
+    nextPhase();
+
+
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
     cout << "################################################\n";
@@ -171,6 +187,9 @@ int main() {
     isHardcore = (hardcoreinput == 1);
     
     nextPhase();
+
+
+
 
     // --- [ PAGE 2 : Status ] ---
     cout << "================================================\n";
