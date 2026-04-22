@@ -17,14 +17,29 @@ void nextPhase() {
 void PreviewCritical(float attackDamage) {
     attackDamage *= 2;
 
-    cout << attackDamage << "\n";// 복사본만 두배
+    cout <<"예상 크리티컬 데미지 : " << attackDamage << "\n";// 복사본만 두배
 
 }
-
+/*
 void LevelUp(int* level) {
     (*level)++;
 }
+*/
 
+void LevelUpRef(int& level) {
+    level++;
+}
+
+//const 참조자 : 복사 비용 절약 + 원본 수정 차단
+void PrintLevel(const int& level) {
+    cout << "현재 레벨은 " << level << "입니다.\n";
+}
+
+//Call by Ref 참조자 전달
+void ApplyCriticalDamage(int& goblinHp, float attackDamage) {
+    int criticalDamage = attackDamage * 2; // 치명타는 2배의 데미지
+    goblinHp -= criticalDamage; // 원본 goblinHp를 직접 감소
+}
 
 
 int main() {
@@ -155,6 +170,7 @@ int main() {
     nextPhase();
     */
 
+/*
     //변수를 통한 함수 호출 테스트
     cout << "원본데미지 : " << attackDamage << "\n";
     cout << "크리데미지 : ";
@@ -162,9 +178,13 @@ int main() {
     cout << "함수 호출 후 데미지 : " << attackDamage << "\n";
     nextPhase();
 
+
+    //Call by Adress 주소에 의한 호출
     cout << "레벨업 전 : " << level << "\n";
     LevelUp(&level);
     cout << "레벨업 후 : " << level << "\n";
+
+
 
     nextPhase();
 
@@ -175,9 +195,26 @@ int main() {
     levelRef++;//레벨레프 수정 : 레벨이 수정될 것임
     cout << "levelRef++후 : " << level << "\n";
 
+    nextPhase();
 
+    //Call by Reference : &없이 호출, *없이 수정
+    cout << "levelupref() 호출 전 원본 level" << level << "\n";
+    LevelUpRef(level);
+    cout << "levelupref() 호출 후 원본 level" << level << "\n";
 
     nextPhase();
+   */
+   /*
+   //const 참조자 : 복사 비용 절약 + 원본 수정 차단
+    PrintLevel(level);
+    LevelUpRef(level);
+    PrintLevel(level);
+ 
+    nextPhase();
+ 
+    */
+
+
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
     cout << "################################################\n";
@@ -227,7 +264,7 @@ int main() {
     nextPhase();
 
     // --- [ PAGE 3 : Battle ] ---
-    float goblinHP = 30;
+    int goblinHP = 60;
     int action;
 
     cout << "            (  ` - '  )  \n";
@@ -240,7 +277,7 @@ int main() {
 
     while (goblinHP > 0 && hp > 0) {
         cout << "\n[ Goblin: " << goblinHP << " HP ] vs [ " << userName << ": " << hp << " HP ]\n";
-        cout << "1. Attack! | 2. Run! \nAction: ";
+        cout << "1. Attack! | 2. Bash Attck! |3. Run! \nAction: ";
         cin >> action;
 
         if (action == 1) {
@@ -250,6 +287,11 @@ int main() {
                 hp -= 30;
                 cout << ">> Goblin counter-attacked! (-30 HP)\n";
             }
+        }
+        else if(action == 2){
+            PreviewCritical(attackDamage);
+            ApplyCriticalDamage(goblinHP, attackDamage);
+            cout << ">> 크리티컬 히트!" << to_string((int)attackDamage * 2) << "\n";
         }
         else {
             cout << ">> You missed your chance!\n";
@@ -293,6 +335,14 @@ int main() {
         invPtr = gameInventory; //invPtr 처음으로 리셋
         int slot = 0;
 
+        //레벨업
+        cout << "************************************************\n";
+        cout << "   경험치를 획득합니다!           \n";
+        cout << "************************************************\n";
+        LevelUpRef(level);
+        PrintLevel(level);
+
+        //아이템 루팅
         cout << "************************************************\n";
         cout << "   아이템을 획득합니다!           \n";
         cout << "************************************************\n";
