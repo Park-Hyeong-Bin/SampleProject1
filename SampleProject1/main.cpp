@@ -17,8 +17,8 @@ void nextPhase() {
 void PreviewCritical(float attackDamage) {
     attackDamage *= 2;
 
-    cout << attackDamage <<"\n";// 복사본만 두배
-   
+    cout << attackDamage << "\n";// 복사본만 두배
+
 }
 
 int main() {
@@ -44,10 +44,10 @@ int main() {
 
 
     /*
-    cout << "hp 변수의 값" << hp << "\n"; 
+    cout << "hp 변수의 값" << hp << "\n";
     cout << "hp 변수의 주소 값" << &hp << "\n"; //변수의 주소값 출력 & 앰퍼센트 연산자 사용
 
-    system("pause"); // 
+    system("pause"); //
     int* ptr = &hp;
     cout << "ptr == &hp 변수의 값" << ptr << "\n";
     cout << "*ptr 값" << *ptr << "\n";
@@ -55,9 +55,9 @@ int main() {
     *ptr = 200;
     cout << "hp 변수의 값" << hp << "\n";
     cout << "*ptr 값" << *ptr << "\n";
-    system("pause"); // 
+    system("pause"); //
     */
- 
+
     /*
     int* ptr2 = nullptr;//포인터 초기화
     cout << "*ptr2 값" << *ptr2 << "\n";
@@ -92,7 +92,7 @@ int main() {
     cout << " score[4] : " << score[4] << "\n";
     cout << " & score[4] : " << &score[4] << "\n";
     system("pause");
-    
+
     cout << "score : " << score << "\n";//배열 이름
     cout << "&score[0] : " << &score[0] << "\n";//첫 원소 주소
     cout << "score[2] : " << score[2] << "\n";//인덱스로 접근
@@ -103,8 +103,8 @@ int main() {
     cout << "sizeof(score[0]) : " << sizeof(score[0]) << "\n";
     cout << "sizeof(score)/sizeof(score[0]) : " << sizeof(score)/sizeof(score[0]) << "\n";
     system("pause");
-    
-    
+
+
     //형변환의 예외 상황2
     cout << "score : " << score << "\n";//시작주소
     cout << "score+1 : " << score + 1 << "\n";//시작주소가 원소를 가리켜서 다음원소의 주소값을 가리킴
@@ -137,7 +137,7 @@ int main() {
 
 
     //허상 포인터 주의 이런 포인터가 발생하면 크래시가 남
-    
+
     int* danglePtr = new int(100);
     cout << "삭제 전  : " << *danglePtr << "\n";
     delete danglePtr;//메모리 해제, 삭제
@@ -145,17 +145,17 @@ int main() {
     danglePtr = nullptr;//안전하게 처리
 
     cout << "삭제 후" << *danglePtr << "\n";
- 
+
 
     system("pause");
     nextPhase();
     */
 
     //변수를 통한 함수 호출 테스트
-    cout <<"원본데미지 : " << attackDamage << "\n";
+    cout << "원본데미지 : " << attackDamage << "\n";
     cout << "크리데미지 : ";
     PreviewCritical(attackDamage);
-    cout << "함수 호출 후 데미지 : "<< attackDamage << "\n";
+    cout << "함수 호출 후 데미지 : " << attackDamage << "\n";
     nextPhase();
 
 
@@ -185,7 +185,7 @@ int main() {
     cout << "\nHardcore Mode? (1: Yes / 2: No): ";
     cin >> hardcoreinput;
     isHardcore = (hardcoreinput == 1);
-    
+
     nextPhase();
 
 
@@ -200,10 +200,10 @@ int main() {
     cout << "  HP    : " << hp << " | MP: " << mp << "\n";
     cout << "  STR   : " << strength << " | DEX : " << dexterity << "\n";
     cout << "  REGIST\n";
-    cout << "  FIRE  : "<< fireResist <<" | COLD :" << coldResist <<"\n";
-    cout << "  LIGHT : "<< lightningResist <<" | POSION : "<< poisonResist <<"\n";
+    cout << "  FIRE  : " << fireResist << " | COLD :" << coldResist << "\n";
+    cout << "  LIGHT : " << lightningResist << " | POSION : " << poisonResist << "\n";
     cout << "  DMG   : " << attackDamage << " | HARDCORE: " << (isHardcore ? "ON" : "OFF") << "\n";
-      cout << "================================================\n";
+    cout << "================================================\n";
 
     nextPhase();
 
@@ -264,7 +264,7 @@ int main() {
 
         //포인터로 인벤토리에 랜덤 숫자 저장
         int* invPtr = gameInventory; // invPtr -> gameInventory 시작주소 [0];
-        
+
         for (int i = 1; i <= 3; i++) {
             *invPtr = rand() % 4 + 1;
             invPtr++;
