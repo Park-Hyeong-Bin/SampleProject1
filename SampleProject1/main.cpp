@@ -13,6 +13,35 @@ void nextPhase() {
     system("cls"); // Windows 전용 화면 지우기 (Mac/Linux는 "clear")
 }
 
+// Call by Value
+void PreviewCritical(float attackDamage) {
+    attackDamage *= 2;
+
+    cout <<"예상 크리티컬 데미지 : " << attackDamage << "\n";// 복사본만 두배
+
+}
+/*
+void LevelUp(int* level) {
+    (*level)++;
+}
+*/
+
+void LevelUpRef(int& level) {
+    level++;
+}
+
+//const 참조자 : 복사 비용 절약 + 원본 수정 차단
+void PrintLevel(const int& level) {
+    cout << "현재 레벨은 " << level << "입니다.\n";
+}
+
+//Call by Ref 참조자 전달
+void ApplyCriticalDamage(int& goblinHp, float attackDamage) {
+    int criticalDamage = attackDamage * 2; // 치명타는 2배의 데미지
+    goblinHp -= criticalDamage; // 원본 goblinHp를 직접 감소
+}
+
+
 int main() {
     char userName[50];
     string charactorClass;
@@ -30,16 +59,14 @@ int main() {
     int poisonResist = 0;
     bool isHardcore = false;
 
-    //인벤토리 생성(0 = 빈칸, 1 = gold, 2 = healing potion, 3 = weapon 4 = armor)
     int gameInventory[5] = { 0,0,0,0,0 };
 
 
-
     /*
-    cout << "hp 변수의 값" << hp << "\n"; 
+    cout << "hp 변수의 값" << hp << "\n";
     cout << "hp 변수의 주소 값" << &hp << "\n"; //변수의 주소값 출력 & 앰퍼센트 연산자 사용
 
-    system("pause"); // 
+    system("pause"); //
     int* ptr = &hp;
     cout << "ptr == &hp 변수의 값" << ptr << "\n";
     cout << "*ptr 값" << *ptr << "\n";
@@ -47,7 +74,7 @@ int main() {
     *ptr = 200;
     cout << "hp 변수의 값" << hp << "\n";
     cout << "*ptr 값" << *ptr << "\n";
-    system("pause"); // 
+    system("pause"); //
     */
  
     /*
@@ -84,7 +111,7 @@ int main() {
     cout << " score[4] : " << score[4] << "\n";
     cout << " & score[4] : " << &score[4] << "\n";
     system("pause");
-    
+
     cout << "score : " << score << "\n";//배열 이름
     cout << "&score[0] : " << &score[0] << "\n";//첫 원소 주소
     cout << "score[2] : " << score[2] << "\n";//인덱스로 접근
@@ -95,8 +122,8 @@ int main() {
     cout << "sizeof(score[0]) : " << sizeof(score[0]) << "\n";
     cout << "sizeof(score)/sizeof(score[0]) : " << sizeof(score)/sizeof(score[0]) << "\n";
     system("pause");
-    
-    
+
+
     //형변환의 예외 상황2
     cout << "score : " << score << "\n";//시작주소
     cout << "score+1 : " << score + 1 << "\n";//시작주소가 원소를 가리켜서 다음원소의 주소값을 가리킴
@@ -129,7 +156,7 @@ int main() {
 
 
     //허상 포인터 주의 이런 포인터가 발생하면 크래시가 남
-    
+
     int* danglePtr = new int(100);
     cout << "삭제 전  : " << *danglePtr << "\n";
     delete danglePtr;//메모리 해제, 삭제
@@ -137,11 +164,56 @@ int main() {
     danglePtr = nullptr;//안전하게 처리
 
     cout << "삭제 후" << *danglePtr << "\n";
- 
+
 
     system("pause");
     nextPhase();
     */
+
+/*
+    //변수를 통한 함수 호출 테스트
+    cout << "원본데미지 : " << attackDamage << "\n";
+    cout << "크리데미지 : ";
+    PreviewCritical(attackDamage);
+    cout << "함수 호출 후 데미지 : " << attackDamage << "\n";
+    nextPhase();
+
+
+    //Call by Adress 주소에 의한 호출
+    cout << "레벨업 전 : " << level << "\n";
+    LevelUp(&level);
+    cout << "레벨업 후 : " << level << "\n";
+
+
+
+    nextPhase();
+
+
+    //Call by Reference : 별칭(Alias) 선언 -> 원본과 같은 메모리
+    int& levelRef = level;
+    cout << "levelRef++전 : " << level << "\n";
+    levelRef++;//레벨레프 수정 : 레벨이 수정될 것임
+    cout << "levelRef++후 : " << level << "\n";
+
+    nextPhase();
+
+    //Call by Reference : &없이 호출, *없이 수정
+    cout << "levelupref() 호출 전 원본 level" << level << "\n";
+    LevelUpRef(level);
+    cout << "levelupref() 호출 후 원본 level" << level << "\n";
+
+    nextPhase();
+   */
+   /*
+   //const 참조자 : 복사 비용 절약 + 원본 수정 차단
+    PrintLevel(level);
+    LevelUpRef(level);
+    PrintLevel(level);
+ 
+    nextPhase();
+ 
+    */
+
 
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
@@ -172,6 +244,9 @@ int main() {
     
     nextPhase();
 
+
+
+
     // --- [ PAGE 2 : Status ] ---
     cout << "================================================\n";
     cout << "             CHARACTER INFORMATION              \n";
@@ -181,15 +256,15 @@ int main() {
     cout << "  HP    : " << hp << " | MP: " << mp << "\n";
     cout << "  STR   : " << strength << " | DEX : " << dexterity << "\n";
     cout << "  REGIST\n";
-    cout << "  FIRE  : "<< fireResist <<" | COLD :" << coldResist <<"\n";
-    cout << "  LIGHT : "<< lightningResist <<" | POSION : "<< poisonResist <<"\n";
+    cout << "  FIRE  : " << fireResist << " | COLD :" << coldResist << "\n";
+    cout << "  LIGHT : " << lightningResist << " | POSION : " << poisonResist << "\n";
     cout << "  DMG   : " << attackDamage << " | HARDCORE: " << (isHardcore ? "ON" : "OFF") << "\n";
-      cout << "================================================\n";
+    cout << "================================================\n";
 
     nextPhase();
 
     // --- [ PAGE 3 : Battle ] ---
-    float goblinHP = 30;
+    int goblinHP = 60;
     int action;
 
     cout << "            (  ` - '  )  \n";
@@ -202,7 +277,7 @@ int main() {
 
     while (goblinHP > 0 && hp > 0) {
         cout << "\n[ Goblin: " << goblinHP << " HP ] vs [ " << userName << ": " << hp << " HP ]\n";
-        cout << "1. Attack! | 2. Run! \nAction: ";
+        cout << "1. Attack! | 2. Bash Attck! |3. Run! \nAction: ";
         cin >> action;
 
         if (action == 1) {
@@ -212,6 +287,11 @@ int main() {
                 hp -= 30;
                 cout << ">> Goblin counter-attacked! (-30 HP)\n";
             }
+        }
+        else if(action == 2){
+            PreviewCritical(attackDamage);
+            ApplyCriticalDamage(goblinHP, attackDamage);
+            cout << ">> 크리티컬 히트!" << to_string((int)attackDamage * 2) << "\n";
         }
         else {
             cout << ">> You missed your chance!\n";
@@ -245,7 +325,7 @@ int main() {
 
         //포인터로 인벤토리에 랜덤 숫자 저장
         int* invPtr = gameInventory; // invPtr -> gameInventory 시작주소 [0];
-        
+
         for (int i = 1; i <= 3; i++) {
             *invPtr = rand() % 4 + 1;
             invPtr++;
@@ -255,6 +335,14 @@ int main() {
         invPtr = gameInventory; //invPtr 처음으로 리셋
         int slot = 0;
 
+        //레벨업
+        cout << "************************************************\n";
+        cout << "   경험치를 획득합니다!           \n";
+        cout << "************************************************\n";
+        LevelUpRef(level);
+        PrintLevel(level);
+
+        //아이템 루팅
         cout << "************************************************\n";
         cout << "   아이템을 획득합니다!           \n";
         cout << "************************************************\n";
