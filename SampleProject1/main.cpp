@@ -21,6 +21,10 @@ void PreviewCritical(float attackDamage) {
 
 }
 
+void LevelUp(int* level) {
+    (*level)++;
+}
+
 int main() {
     char userName[50];
     string charactorClass;
@@ -37,6 +41,9 @@ int main() {
     int coldResist = 0;
     int poisonResist = 0;
     bool isHardcore = false;
+
+    int gameInventory[5] = { 0,0,0,0,0 };
+
 
     /*
     cout << "hp 변수의 값" << hp << "\n";
@@ -153,6 +160,11 @@ int main() {
     cout << "함수 호출 후 데미지 : " << attackDamage << "\n";
     nextPhase();
 
+    cout << "레벨업 전 : " << level << "\n";
+    LevelUp(&level);
+    cout << "레벨업 후 : " << level << "\n";
+
+    nextPhase();
 
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
