@@ -25,6 +25,8 @@ void LevelUp(int* level) {
     (*level)++;
 }
 
+
+
 int main() {
     char userName[50];
     string charactorClass;
@@ -166,6 +168,16 @@ int main() {
 
     nextPhase();
 
+
+    //Call by Reference : 별칭(Alias) 선언 -> 원본과 같은 메모리
+    int& levelRef = level;
+    cout << "levelRef++전 : " << level << "\n";
+    levelRef++;//레벨레프 수정 : 레벨이 수정될 것임
+    cout << "levelRef++후 : " << level << "\n";
+
+
+
+    nextPhase();
     // --- [ PAGE 1 : Intro ] ---
     system("cls");
     cout << "################################################\n";
