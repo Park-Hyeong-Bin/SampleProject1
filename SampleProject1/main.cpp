@@ -38,11 +38,6 @@ int main() {
     int poisonResist = 0;
     bool isHardcore = false;
 
-    //인벤토리 생성(0 = 빈칸, 1 = gold, 2 = healing potion, 3 = weapon 4 = armor)
-    int gameInventory[5] = { 0,0,0,0,0 };
-
-
-
     /*
     cout << "hp 변수의 값" << hp << "\n";
     cout << "hp 변수의 주소 값" << &hp << "\n"; //변수의 주소값 출력 & 앰퍼센트 연산자 사용
@@ -57,7 +52,7 @@ int main() {
     cout << "*ptr 값" << *ptr << "\n";
     system("pause"); //
     */
-
+ 
     /*
     int* ptr2 = nullptr;//포인터 초기화
     cout << "*ptr2 값" << *ptr2 << "\n";
@@ -185,7 +180,7 @@ int main() {
     cout << "\nHardcore Mode? (1: Yes / 2: No): ";
     cin >> hardcoreinput;
     isHardcore = (hardcoreinput == 1);
-
+    
     nextPhase();
 
 
