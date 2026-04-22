@@ -98,7 +98,7 @@ int main() {
     */
 
     /*
-    //배열에 포인트를 주었을 경우
+       //배열에 포인트를 주었을 경우
     int score[5] = { 85,92,78,46,50 };
     cout << " score[0] : " << score[0] << "\n";
     cout << " & score[0] : " << &score[0] << "\n";
@@ -243,8 +243,6 @@ int main() {
     isHardcore = (hardcoreinput == 1);
     
     nextPhase();
-
-
 
 
     // --- [ PAGE 2 : Status ] ---
