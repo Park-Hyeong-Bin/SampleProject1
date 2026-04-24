@@ -2,6 +2,8 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include "Player.h"
+#include "Monster.h"
 
 using namespace std;
 
@@ -13,128 +15,8 @@ void nextPhase() {
     system("cls"); // Windows 전용 화면 지우기
 }
 
-// Monster 클래스 
-class Monster
-{
-private:
-    int hp, maxHp;
-    int attackDamage;
-public:
-    Monster(int initHp, int atk)
-        : hp(initHp), maxHp(initHp), attackDamage(atk)
-    {
-        cout << "[몬스터 등장!] HP: " << hp << " / ATK: " << attackDamage << '\n';
-    }
-    ~Monster()
-    {
-        cout << "[몬스터 소멸!]\n";
-    }
-    int GetHp() const { return hp; }
-    int GetMaxHp() const { return maxHp; }
-    int isAlive() const { return hp > 0; }
-    void TakeDamage(int damage)
-    {
-        hp -= damage;
-        if (hp <= 0) hp = 0; //음수 방지
-    }
-    int Attack() const { return attackDamage; }
-};
 
-//Player 클래스
-class Player
-{
-private:
-    //기본 정보
-    string name;
-    string characterClass;
-    bool isHardcore;
 
-    //기본 능력치
-    int strength, dexterity, vitality, energy;
-
-    //파생 능력치
-    int level;
-    int hp, maxHp;
-    int mp, maxMp;
-    float attackDamage;
-    float attackSpeed;
-    double movingSpeed;
-
-    //저항력
-    int fireResist, coldResist, lightningResist, poisonResist;
-
-    //인벤토리
-    int inventory[5];
-
-public:
-    Player(const string& name, const string& characterClass, bool isHardcore)//외부 입력값 세팅 초기화
-        :name(name), characterClass(characterClass), isHardcore(isHardcore),//단순 값 초기화
-        strength(50), dexterity(50), vitality(50), energy(50),
-        level(1), movingSpeed(50),
-        fireResist(0), coldResist(0), lightningResist(0), poisonResist(0)
-    {
-        maxHp = vitality * 2; //계산이 필요한 곳
-        hp = maxHp;
-        maxMp = energy * 2;
-        mp = maxMp;
-        attackDamage = strength * 0.2f;
-        attackSpeed = dexterity * 10.0f;
-        for (int i = 0; i < 5; i++) inventory[i] = 0;
-    }
-
-    //Getters
-    string GetName() const { return name; }
-    string GetCharacterClass() const { return characterClass; }
-    bool IsHardcore() const { return isHardcore; }
-    int GetStrength() const { return strength; }
-    int GetDexterity() const { return dexterity; }
-    int GetVitality() const { return vitality; }
-    int GetEnergy() const { return energy; }
-    int GetLevel() const { return level; }
-    double GetMovingSpeed() const { return movingSpeed; }
-    float GetFireResist() const { return fireResist; }
-    float GetColdResist() const { return coldResist; }
-    float GetLightningResist() const { return lightningResist; }
-    float GetPoisonResist() const { return poisonResist; }
-    float GetAttackDamage() const { return attackDamage; }
-    float GetAttackSpeed() const { return attackSpeed; }
-    int GetMaxHP() const { return maxHp; }
-    int GetHP() const { return hp; }
-    int GetMaxMP() const { return maxMp; }
-    int GetMP() const { return mp; }
-
-    int* GetInventory() { return inventory; }
-
-    //기능(함수)
-    bool isAlive() const { return hp > 0; }
-    
-    void TakeDamage(int damage)
-    {
-        hp -= damage;
-        if (hp < 0) hp = 0;
-    }
-    
-    int Attack() const { return (int)attackDamage; }
-    int CriticalAttack() const { return (int)(attackDamage * 2); }
-
-    void PreviewCritical() const
-    {
-        float preview = attackDamage * 2;
-        cout << "크리티컬 예상 데미지: " << preview << '\n';
-    }
-    
-    void PrintLevel() const
-    {
-        cout << "현재 레벨: " << level << '\n';
-    }
-
-    // 객체지향에 맞춰 캐릭터 내부에 레벨업 기능 추가
-    void LevelUp() 
-    {
-        level++;
-        // 레벨업 시 체력 회복 등의 보너스를 넣어도 좋아!
-    }
-};
 
 int main() {
     string userName;
