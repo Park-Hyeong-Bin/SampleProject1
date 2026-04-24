@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
-#include <ctime>
 #include <cstdlib>
+#include "Character.h"
 #include "Player.h"
 #include "Monster.h"
+
 
 using namespace std;
 
@@ -88,101 +89,106 @@ int main() {
 
     nextPhase();
 
-    // --- [ PAGE 3 : Battle ] ---
-    Monster goblin(60, 10);
-    int action;
+    int pendingExp = 0;
+    {
+        // --- [ PAGE 3 : Battle ] ---
+    
+        Monster goblin(50,0,15,0,50);
+    
+        int action;
 
-    cout << "            (  ` - '  )  \n";
-    cout << "             )       (   \n";
-    cout << "            (  o   o  )  < GRRRRR!!\n";
-    cout << "             )   ^   (   \n";
-    cout << "            (   ---   )  \n";
-    cout << "             '-------'   \n";
-    cout << "[SYSTEM] A Goblin appeared!\n";
+        cout << "            (  ` - '  )  \n";
+        cout << "             )       (   \n";
+        cout << "            (  o   o  )  < GRRRRR!!\n";
+        cout << "             )   ^   (   \n";
+        cout << "            (   ---   )  \n";
+        cout << "             '-------'   \n";
+        cout << "[SYSTEM] A Goblin appeared!\n";
 
-    while (goblin.isAlive() && player.isAlive()) {
-        cout << "\n[ Goblin: " << goblin.GetHp() << " HP ] vs [ " << userName << ": " << player.GetHP() << " HP ]\n";
-        cout << "1. Attack! | 2. Bash Attack! | 3. Run! \nAction: ";
-        cin >> action;
+        while (goblin.isAlive() && player.isAlive()) {
+            cout << "\n[ Goblin: " << goblin.GetHP() << " HP ] vs [ " << userName << ": " << player.GetHP() << " HP ]\n";
+            cout << "1. Attack! | 2. Bash Attack! | 3. Run! \nAction: ";
+            cin >> action;
 
-        if (action == 1) {
-            int dmg = player.Attack();
-            goblin.TakeDamage(dmg);
-            cout << ">> You dealt " << dmg << " damage!\n";
+            if (action == 1) {
+                int dmg = player.Attack();
+                goblin.TakeDamage(dmg);
+                cout << ">> You dealt " << dmg << " damage!\n";
             
-        }
-        else if (action == 2) {
-            player.PreviewCritical();
-            int critDmg = player.CriticalAttack();
-            goblin.TakeDamage(critDmg);
-            cout << ">> 크리티컬 히트! " << critDmg << " 데미지!\n";
-        }
-        else {
-            cout << ">> You missed your chance!\n";
-        }
+            }
+            else if (action == 2) {
+                player.PreviewCritical();
+                int critDmg = player.CriticalAttack();
+                goblin.TakeDamage(critDmg);
+                cout << ">> 크리티컬 히트! " << critDmg << " 데미지!\n";
+            }
+            else {
+                cout << ">> You missed your chance!\n";
+            }
 
-        if (goblin.isAlive()) {
-            player.TakeDamage(goblin.Attack());
-            cout << ">> Goblin counter-attacked! (-" << goblin.Attack() << " HP)\n";
+            if (goblin.isAlive()) {
+                player.TakeDamage(goblin.Attack());
+                cout << ">> Goblin counter-attacked! (-" << goblin.Attack() << " HP)\n";
+            }
         }
-    }
-
-    nextPhase();
-
-    // --- [ PAGE 4 : Result ] ---
-    if (!player.isAlive()) {
-        cout << "  _______      ___      .___  ___.  _______ \n";
-        cout << " /  _____|    /   \\     |   \\/   | |   ____|\n";
-        cout << "|  |  __     /  ^  \\    |  \\  /  | |  |__   \n";
-        cout << "|  | |_ |   /  /_\\  \\   |  |\\/|  | |   __|  \n";
-        cout << "|  |__| |  /  _____  \\  |  |  |  | |  |____ \n";
-        cout << " \\______| /__/     \\__\\ |__|  |__| |_______|\n";
-        cout << "\n";
-        cout << "  ______   ____    ____  _______ .______  \n";
-        cout << " /  __  \\  \\   \\  /   / |   ____||   _  \\ \n";
-        cout << "|  |  |  |  \\   \\/   /  |  |__   |  |_)  |\n";
-        cout << "|  |  |  |   \\      /   |   __|  |      / \n";
-        cout << "|  `--'  |    \\    /    |  |____ |  |\\  \\--.\n";
-        cout << " \\______/      \\__/     |_______|| _| `.___|\n";
-    }
-    else {
-        cout << "************************************************\n";
-        cout << "   VICTORY! You defeated the Goblin!           \n";
-        cout << "************************************************\n";
 
         nextPhase();
-        
-        // 아이템 저장
-        int* invPtr = player.GetInventory();
-        for (int i = 1; i <= 3; i++) {
-            *invPtr = rand() % 4 + 1;
-            invPtr++;
-        }
-        
-        invPtr = player.GetInventory(); //invPtr 처음으로 리셋
-        int slot = 0;
 
-        // 레벨업
-        cout << "************************************************\n";
-        cout << "        경험치를 획득합니다!           \n";
-        cout << "************************************************\n";
-        player.LevelUp();
-        player.PrintLevel();
+        // --- [ PAGE 4 : Result ] ---
+        if (!player.isAlive()) {
+            cout << "  _______      ___      .___  ___.  _______ \n";
+            cout << " /  _____|    /   \\     |   \\/   | |   ____|\n";
+            cout << "|  |  __     /  ^  \\    |  \\  /  | |  |__   \n";
+            cout << "|  | |_ |   /  /_\\  \\   |  |\\/|  | |   __|  \n";
+            cout << "|  |__| |  /  _____  \\  |  |  |  | |  |____ \n";
+            cout << " \\______| /__/     \\__\\ |__|  |__| |_______|\n";
+            cout << "\n";
+            cout << "  ______   ____    ____  _______ .______  \n";
+            cout << " /  __  \\  \\   \\  /   / |   ____||   _  \\ \n";
+            cout << "|  |  |  |  \\   \\/   /  |  |__   |  |_)  |\n";
+            cout << "|  |  |  |   \\      /   |   __|  |      / \n";
+            cout << "|  `--'  |    \\    /    |  |____ |  |\\  \\--.\n";
+            cout << " \\______/      \\__/     |_______|| _| `.___|\n";
+        }
+        else {
+            cout << "************************************************\n";
+            cout << "   VICTORY! You defeated the Goblin!           \n";
+            cout << "************************************************\n";
+
+            nextPhase();
+            pendingExp = goblin.GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
+        
+            // 아이템 저장
+            int* invPtr = player.GetInventory();
+            for (int i = 1; i <= 3; i++) {
+                *invPtr = rand() % 4 + 1;
+                invPtr++;
+            }
+        
+            invPtr = player.GetInventory(); //invPtr 처음으로 리셋
+            int slot = 0;
+
+            // 레벨업
+            cout << "************************************************\n";
+            cout << "        경험치를 획득합니다!"<< to_string(pendingExp) <<"exp \n";
+            cout << "************************************************\n";
+            player.GainExp(pendingExp);
     
-        // 아이템 루팅 출력
-        cout << "************************************************\n";
-        cout << "        아이템을 획득합니다!           \n";
-        cout << "************************************************\n";
-        while (invPtr < player.GetInventory() + 5) {
-            string itemName;
-            if (*invPtr == 1) itemName = "골드";
-            else if (*invPtr == 2) itemName = "회복 포션";
-            else if (*invPtr == 3) itemName = "무기";
-            else if (*invPtr == 4) itemName = "갑옷";
-            else itemName = "None";
-            cout << "> Slot" << slot << "[" << itemName << "]\n";
-            invPtr++;
-            slot++;
+            // 아이템 루팅 출력
+            cout << "************************************************\n";
+            cout << "        아이템을 획득합니다!           \n";
+            cout << "************************************************\n";
+            while (invPtr < player.GetInventory() + 5) {
+                string itemName;
+                if (*invPtr == 1) itemName = "골드";
+                else if (*invPtr == 2) itemName = "회복 포션";
+                else if (*invPtr == 3) itemName = "무기";
+                else if (*invPtr == 4) itemName = "갑옷";
+                else itemName = "None";
+                cout << "> Slot" << slot << "[" << itemName << "]\n";
+                invPtr++;
+                slot++;
+            }
         }
     }
 
