@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+
+#include "Battle.h"
 #include "Character.h"
 #include "Player.h"
 #include "Monster.h"
@@ -105,32 +107,8 @@ int main() {
         cout << "             '-------'   \n";
         cout << "[SYSTEM] A Goblin appeared!\n";
 
-        while (goblin.isAlive() && player.isAlive()) {
-            cout << "\n[ Goblin: " << goblin.GetHP() << " HP ] vs [ " << userName << ": " << player.GetHP() << " HP ]\n";
-            cout << "1. Attack! | 2. Bash Attack! | 3. Run! \nAction: ";
-            cin >> action;
-
-            if (action == 1) {
-                int dmg = player.Attack();
-                goblin.TakeDamage(dmg);
-                cout << ">> You dealt " << dmg << " damage!\n";
-            
-            }
-            else if (action == 2) {
-                player.PreviewCritical();
-                int critDmg = player.CriticalAttack();
-                goblin.TakeDamage(critDmg);
-                cout << ">> 크리티컬 히트! " << critDmg << " 데미지!\n";
-            }
-            else {
-                cout << ">> You missed your chance!\n";
-            }
-
-            if (goblin.isAlive()) {
-                player.TakeDamage(goblin.Attack());
-                cout << ">> Goblin counter-attacked! (-" << goblin.Attack() << " HP)\n";
-            }
-        }
+        Battle battle(player,goblin);
+        battle.Run();
 
         nextPhase();
 
@@ -152,7 +130,7 @@ int main() {
         }
         else {
             cout << "************************************************\n";
-            cout << "   VICTORY! You defeated the Goblin!           \n";
+            cout << "   전투에서 승리하셨습니다!           \n";
             cout << "************************************************\n";
 
             nextPhase();
