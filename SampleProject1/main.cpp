@@ -136,39 +136,17 @@ int main() {
             nextPhase();
             pendingExp = goblin.GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
         
-            // 아이템 저장
-            int* invPtr = player.GetInventory();
-            for (int i = 1; i <= 3; i++) {
-                *invPtr = rand() % 4 + 1;
-                invPtr++;
-            }
-        
-            invPtr = player.GetInventory(); //invPtr 처음으로 리셋
-            int slot = 0;
-
             // 레벨업
             cout << "************************************************\n";
             cout << "        경험치를 획득합니다!"<< to_string(pendingExp) <<"exp \n";
             cout << "************************************************\n";
             player.GainExp(pendingExp);
-    
-            // 아이템 루팅 출력
-            cout << "************************************************\n";
-            cout << "        아이템을 획득합니다!           \n";
-            cout << "************************************************\n";
-            while (invPtr < player.GetInventory() + 5) {
-                string itemName;
-                if (*invPtr == 1) itemName = "골드";
-                else if (*invPtr == 2) itemName = "회복 포션";
-                else if (*invPtr == 3) itemName = "무기";
-                else if (*invPtr == 4) itemName = "갑옷";
-                else itemName = "None";
-                cout << "> Slot" << slot << "[" << itemName << "]\n";
-                invPtr++;
-                slot++;
+            
+            // 아이템 저장
+            player.Loot();
             }
         }
     }
 
-    return 0;
-}
+
+

@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
-
+#include <vector>
 #include "Character.h"
+
 
 using namespace std;
 
@@ -17,7 +18,7 @@ private:
     int exp, expToNextLevel;
 
     //인벤토리
-    int inventory[5];
+    vector<int> inventory;
 
 public:
     //생성자
@@ -30,7 +31,7 @@ public:
     bool IsHardcore() const { return isHardcore; }
     int GetExp() const { return exp; }
     int GetExpToNextLevel() const { return expToNextLevel; }
-    int* GetInventory() { return inventory; }
+    vector<int> GetInventory() { return inventory; }
 
     //기능(함수)
     int CriticalAttack() const { return (int)(attackDamage * 2); }
@@ -38,6 +39,7 @@ public:
     void PrintLevel() const;
     void LevelUp();
     void GainExp(int amount);
+    void Loot(int count = 3);
     
     
 };

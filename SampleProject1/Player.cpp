@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -15,9 +16,7 @@ Player::Player(const string& name, const string& characterClass, bool isHardcore
         mp = maxMp;
         attackDamage = strength * 0.2f;
         attackSpeed = dexterity * 10.0f;
-        for(int i = 0; i < 5; i++) inventory[i] = 0;
-    
-    
+        
 }
 
 
@@ -47,3 +46,30 @@ void Player::GainExp(int amount)
         cout << "[레벨 업!] Level: " << level << '\n';
     }
 }
+
+void Player::Loot(int count)
+{
+    cout<<"아이템 루팅중..."<<'\n';
+    
+    //count가 아이템을 vector에 추가
+    cout << "************************************************\n";
+    cout << "        아이템을 획득합니다! \n";
+    cout << "************************************************\n";
+    for (int i = 0; i < count; i++)
+    {
+        //랜덤 숫자 1개씩 인벤토리 벡터에 넣음
+        inventory.push_back(rand()%4 + 1);
+    }
+        
+    for (int i = 0; i < inventory.size(); i++)
+    {
+        string itemName;
+        if (inventory[i]== 1) itemName = "골드";
+        else if (inventory[i] == 2) itemName = "회복 포션";
+        else if (inventory[i] == 3) itemName = "무기";
+        else if (inventory[i] == 4) itemName = "갑옷";
+        else itemName = "None";
+        cout << "> Slot" << to_string(i) << "[" << itemName << "]\n";
+    }    
+}
+ 
