@@ -9,7 +9,7 @@ bool Battle::Run()
     int action;
     
     while (monster.isAlive() && player.isAlive()) {
-        cout << "\n[ Goblin: " << monster.GetHP() << " HP ] vs [ " << player.GetName() << ": " << player.GetHP() << " HP ]\n";
+        cout << "\n[" << monster.GetName() << " : " << monster.GetHP() << " HP ] vs [ " << player.GetName() << ": " << player.GetHP() << " HP ]\n";
         cout << "1. Attack! | 2. Bash Attack! | 3. Run! \nAction: ";
         cin >> action;
 
@@ -31,7 +31,7 @@ bool Battle::Run()
 
         if (monster.isAlive()) {
             player.TakeDamage(monster.Attack());
-            cout << ">> Goblin counter-attacked! (-" << monster.Attack() << " HP)\n";
+            cout << ">>" << monster.GetName() <<" counter-attacked! (-" << monster.Attack() << " HP)\n";
         }
     }
     return player.isAlive();

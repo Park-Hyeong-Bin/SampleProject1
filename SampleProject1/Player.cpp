@@ -55,6 +55,11 @@ void Player::Loot(int count)
     cout << "************************************************\n";
     cout << "        아이템을 획득합니다! \n";
     cout << "************************************************\n";
+    system("pause");
+    system("cls");
+    cout << "************************************************\n";
+    cout << "         현재 내 인벤토리 \n";
+    cout << "************************************************\n";
     for (int i = 0; i < count; i++)
     {
         //랜덤 숫자 1개씩 인벤토리 벡터에 넣음
@@ -69,7 +74,7 @@ void Player::Loot(int count)
         else if (inventory[i] == 3) itemName = "무기";
         else if (inventory[i] == 4) itemName = "갑옷";
         else itemName = "None";
-        cout << "> Slot" << to_string(i) << "[" << itemName << "]\n";
+        cout << "> Slot" << to_string(i+1) << "[" << itemName << "]\n";
     }    
 }
  

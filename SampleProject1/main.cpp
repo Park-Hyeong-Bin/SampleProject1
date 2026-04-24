@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <vector>
 
 #include "Battle.h"
 #include "Character.h"
@@ -21,7 +22,8 @@ void nextPhase() {
 
 
 
-int main() {
+int main()
+{
     string userName;
     string charactorClass;
     int classChoiceInput;
@@ -90,29 +92,32 @@ int main() {
     cout << "================================================\n";
 
     nextPhase();
-
+    // --- [ PAGE 3 : 전투 ] ---
+    
     int pendingExp = 0;
+    vector<Monster> monsters = {
+        Monster ("Goblin",50,0,15,0,50),
+        Monster ("Skelleton",60,0,20,0,150),
+        Monster ("Zombie",70,0,25,0,100),
+        Monster ("Stranger",80,0,30,0,500),
+        Monster ("Dragon",1000,0,2000,0,50000)
+    };
+    
+    for (Monster& monster : monsters)
     {
-        // --- [ PAGE 3 : Battle ] ---
-    
-        Monster goblin(50,0,15,0,50);
-    
-        int action;
-
+        if (!player.isAlive()) break;
+        
         cout << "            (  ` - '  )  \n";
         cout << "             )       (   \n";
         cout << "            (  o   o  )  < GRRRRR!!\n";
         cout << "             )   ^   (   \n";
         cout << "            (   ---   )  \n";
         cout << "             '-------'   \n";
-        cout << "[SYSTEM] A Goblin appeared!\n";
-
-        Battle battle(player,goblin);
+        cout << "[시스템] "<< monster.GetName() <<" 가 나타났습니다!\n";
+        
+        Battle battle(player,monster);
         battle.Run();
-
-        nextPhase();
-
-        // --- [ PAGE 4 : Result ] ---
+        
         if (!player.isAlive()) {
             cout << "  _______      ___      .___  ___.  _______ \n";
             cout << " /  _____|    /   \\     |   \\/   | |   ____|\n";
@@ -130,11 +135,11 @@ int main() {
         }
         else {
             cout << "************************************************\n";
-            cout << "   전투에서 승리하셨습니다!           \n";
+            cout << monster.GetName() <<" 와의 전투에서 승리하셨습니다!           \n";
             cout << "************************************************\n";
 
             nextPhase();
-            pendingExp = goblin.GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
+            pendingExp = monster.GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
         
             // 레벨업
             cout << "************************************************\n";
@@ -144,9 +149,11 @@ int main() {
             
             // 아이템 저장
             player.Loot();
-            }
+            nextPhase();
         }
+        
     }
+}
 
 
 
