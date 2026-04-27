@@ -7,6 +7,7 @@
 #include "Character.h"
 #include "Player.h"
 #include "Monster.h"
+#include "FireGoblin.h"
 
 
 using namespace std;
@@ -95,15 +96,16 @@ int main()
     // --- [ PAGE 3 : 전투 ] ---
     
     int pendingExp = 0;
-    vector<Monster> monsters = {
-        Monster ("Goblin",50,0,15,0,50),
-        Monster ("Skelleton",60,0,20,0,150),
-        Monster ("Zombie",70,0,25,0,100),
-        Monster ("Stranger",80,0,30,0,500),
-        Monster ("Dragon",1000,0,2000,0,50000)
+    vector<Monster*> monsters = {
+        new Monster ("Goblin",50,0,15,0,50),
+        new FireGoblin("RedGoblin",50,0,15,0,50),
+        new Monster ("Skelleton",60,0,20,0,150),
+        new Monster ("Zombie",70,0,25,0,100),
+        new Monster ("Stranger",80,0,30,0,500),
+        new Monster ("Dragon",1000,0,2000,0,50000)
     };
     
-    for (Monster& monster : monsters)
+    for (Monster* monster : monsters)
     {
         if (!player.isAlive()) break;
         
@@ -113,9 +115,9 @@ int main()
         cout << "             )   ^   (   \n";
         cout << "            (   ---   )  \n";
         cout << "             '-------'   \n";
-        cout << "[시스템] "<< monster.GetName() <<" 가 나타났습니다!\n";
+        cout << "[시스템] "<< monster->GetName() <<" 가 나타났습니다!\n";
         
-        Battle battle(player,monster);
+        Battle battle(player,*monster);
         battle.Run();
         
         if (!player.isAlive()) {
@@ -135,11 +137,11 @@ int main()
         }
         else {
             cout << "************************************************\n";
-            cout << monster.GetName() <<" 와의 전투에서 승리하셨습니다!           \n";
+            cout << monster->GetName() <<" 와의 전투에서 승리하셨습니다!           \n";
             cout << "************************************************\n";
 
             nextPhase();
-            pendingExp = monster.GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
+            pendingExp = monster->GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
         
             // 레벨업
             cout << "************************************************\n";
@@ -152,7 +154,10 @@ int main()
             nextPhase();
         }
         
-    }
+        //new로 생성한 몬스터 메모리 해제
+        delete monster;
+        
+    }    
 }
 
 
