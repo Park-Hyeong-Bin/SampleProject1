@@ -76,6 +76,7 @@ int main()
     nextPhase();
     //Player 객체 생성
     Player player(userName, charactorClass, isHardcore);
+    Player*
 
     // --- [ PAGE 2 : Status ] ---
     cout << "================================================\n";

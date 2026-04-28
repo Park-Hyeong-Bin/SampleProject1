@@ -19,11 +19,11 @@ private:
 
     //인벤토리
     vector<int> inventory;
-
+    
+    
+    
 public:
-    //생성자
     Player(const string& name, const string& characterClass, bool isHardcore);//외부 입력값 세팅 초기화
-        
 
     //Getters
     string GetName() const { return name; }
@@ -40,6 +40,11 @@ public:
     void LevelUp();
     void GainExp(int amount);
     void Loot(int count = 3);
+    virtual string GetAttackMessage() const{return "";}
+    
+protected:
+    Player(const string& name, const string& characterClass, bool isHardcore, int str, int dex, int vit, int eng);//외부 입력값 세팅 초기화
+
     
     
 };
