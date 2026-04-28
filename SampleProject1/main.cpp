@@ -1,10 +1,13 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <iomanip>
 #include <vector>
+#include <memory>
 
+#include "Sorceress.h"
+#include "Barbarian.h"
 #include "Battle.h"
-#include "Character.h"
 #include "Player.h"
 #include "Monster.h"
 #include "FireGoblin.h"
@@ -20,9 +23,6 @@ void nextPhase() {
     system("cls"); // Windows 전용 화면 지우기
 }
 
-
-
-
 int main()
 {
     string userName;
@@ -31,7 +31,7 @@ int main()
     char hardcoreInput;
     bool isHardcore = false;
     
-    // --- [ PAGE 1 : Intro ] ---
+    // --- [ PAGE 1 : 캐릭터 생성 ] ---
     system("cls || clear");
     cout << "################################################\n";
     cout << "#                                              #\n";
@@ -75,7 +75,11 @@ int main()
     
     nextPhase();
     //Player 객체 생성
-    Player player(userName, charactorClass, isHardcore);
+    unique_ptr<Player> playerPtr;
+    if (classChoiceInput == 3) playerPtr = make_unique<Barbarian>(userName, isHardcore);
+    else if (classChoiceInput == 7) playerPtr = make_unique<Sorceress>(userName, isHardcore);
+    else playerPtr = make_unique<Player>(userName, charactorClass, isHardcore);
+    Player& player = *playerPtr;
 
     // --- [ PAGE 2 : Status ] ---
     cout << "================================================\n";
@@ -96,16 +100,15 @@ int main()
     // --- [ PAGE 3 : 전투 ] ---
     
     int pendingExp = 0;
-    vector<Monster*> monsters = {
-        new Monster ("Goblin",50,0,15,0,50),
-        new FireGoblin("RedGoblin",50,0,15,0,50),
-        new Monster ("Skelleton",60,0,20,0,150),
-        new Monster ("Zombie",70,0,25,0,100),
-        new Monster ("Stranger",80,0,30,0,500),
-        new Monster ("Dragon",1000,0,2000,0,50000)
-    };
+    vector<unique_ptr<Monster>> monsters ;
+    monsters.push_back(make_unique<Monster>("Goblin", 50, 0 ,15 ,0 ,50));
+    monsters.push_back(make_unique<FireGoblin>("FireGoblin", 50, 0 ,15 ,0 ,50));
+    monsters.push_back(make_unique<Monster>("Skeleton", 60, 0 ,20 ,0 ,50));
+    monsters.push_back(make_unique<Monster>("Wraith", 50, 0 ,25 ,0 ,50));
+    monsters.push_back(make_unique<Monster>("Ghoul", 70, 0 ,35 ,0 ,120));
+    monsters.push_back(make_unique<Monster>("Andariel", 200, 0 ,150 ,0 ,500));
     
-    for (Monster* monster : monsters)
+    for (auto& monster : monsters)
     {
         if (!player.isAlive()) break;
         
@@ -115,7 +118,7 @@ int main()
         cout << "             )   ^   (   \n";
         cout << "            (   ---   )  \n";
         cout << "             '-------'   \n";
-        cout << "[시스템] "<< monster->GetName() <<" 가 나타났습니다!\n";
+        cout << "[시스템] "<< monster->GetName() <<"이(가) 나타났습니다!\n";
         
         Battle battle(player,*monster);
         battle.Run();
@@ -141,22 +144,25 @@ int main()
             cout << "************************************************\n";
 
             nextPhase();
-            pendingExp = monster->GetExpReward(); // 몬스터 객체 소멸 전 경험치 저장
-        
-            // 레벨업
-            cout << "************************************************\n";
-            cout << "        경험치를 획득합니다!"<< to_string(pendingExp) <<"exp \n";
-            cout << "************************************************\n";
-            player.GainExp(pendingExp);
             
-            // 아이템 저장
-            player.Loot();
+            //몬스터 처치-> 아이템드롭 -> move로 소유권 이전
+            unique_ptr<Item> dropItem = monster->Drop();
+            if (dropItem)
+            {
+                cout<<"[드롭]" << dropItem->name << " 가 바닥에 떨어졌습니다.\n";
+                player.Loot(move(dropItem));//소유권 이전
+                cout<<"[로그] dropItem nullptr?" << (dropItem == nullptr ? "Yes" : "No") << endl;
+            }
+            else
+            {
+                cout<<"[드롭] 아무것도 드롭되지 않았습니다. \n";
+            }
+            player.PrintInventory();
+            
+            player.GainExp(pendingExp);
+            player.PrintLevel();
             nextPhase();
         }
-        
-        //new로 생성한 몬스터 메모리 해제
-        delete monster;
-        
     }    
 }
 
