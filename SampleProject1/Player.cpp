@@ -21,11 +21,16 @@ Player::Player(const string& name, const string& characterClass, bool isHardcore
         attackDamage = (float)strength * 0.2f;
         attackSpeed = (float)dexterity / 10.0f;
         movingSpeed = (double)dexterity / 30.0f;
+    
+        inventory.reserve(6); //재할당에 다른 복사(Reallocation)를 방지하기 위해서 미리 capacity확보
 }
 
 Player::Player(const string& name, const string& characterClass, bool isHardcore,
     int str, int dex, int vit, int eng)
-        : Character(str, dex, vit, eng, 1), exp(0), expToNextLevel(50) {}
+        : name(name), characterClass(characterClass), isHardcore(isHardcore), Character(str, dex, vit, eng, 1), exp(0), expToNextLevel(50)
+{
+        inventory.reserve(6);
+}
 
 Player::~Player()
 {
@@ -60,10 +65,12 @@ void Player::GainExp(int amount)
     }
 }
 
-void Player::Loot(unique_ptr<Item> item)
+void Player::Loot(Item item)
 {
-    cout << "[획득]" << item->name << endl;
-    inventory.push_back(*item);
+    cout << "[획득]" << item.name << endl;
+    inventory.emplace_back(move(item)); // Item을 인벤토리 안으로 직접 이동
+    cout << "인벤토리 size" << inventory.size() << endl;
+    cout << "인벤토리 capacity" << inventory.capacity() << endl;
 }
 
 

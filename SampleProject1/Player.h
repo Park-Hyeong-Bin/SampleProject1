@@ -53,7 +53,7 @@ public:
     void PrintLevel() const;
     void LevelUp();
     void GainExp(int amount);
-    void Loot(unique_ptr<Item> item); // 소유권 이전을 통한 아이템 획득
+    void Loot(Item item); // 소유권 이전을 통한 아이템 획득
     void PrintInventory() const;//인벤토리 전체 출력
     
     

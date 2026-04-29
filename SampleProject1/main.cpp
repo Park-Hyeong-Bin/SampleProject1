@@ -157,7 +157,7 @@ int main()
             if (dropItem)
             {
                 cout<<"[드롭]" << dropItem->name << " 가 바닥에 떨어졌습니다.\n";
-                player.Loot(move(dropItem));//소유권 이전
+                player.Loot(move(*dropItem));//소유권 이전
                 cout<<"[로그] dropItem nullptr?" << (dropItem == nullptr ? "Yes" : "No") << endl;
             }
             else
