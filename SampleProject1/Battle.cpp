@@ -3,8 +3,10 @@
 #include <cstdlib>
 #include <iomanip>
 
-Battle::Battle(Player& player, Monster& monster)
-    : player(player), monster(monster), combatMessage("[시스템] 전투 시작!") {}
+#include "Mercenary.h"
+
+Battle::Battle(Player& player, Monster& monster, shared_ptr<Mercenary> mercenary)
+    : player(player), monster(monster), mercenary(mercenary),combatMessage("[시스템] 전투 시작!") {}
 
 bool Battle::Run()
 {
@@ -34,6 +36,13 @@ bool Battle::Run()
         if (action == 1) {
             monster.TakeDamage(player.Attack()); //객체 스스로 데미지 처리
             combatMessage = "=>" + player.GetAttackMessage() + "당신은 " + monster.GetName() + "을(를) 공격했습니다!(데미지 :" + to_string(player.Attack()) + ")";
+            
+            if (mercenary && monster.isAlive())
+            {
+                int mercDmg = mercenary->Attack();
+                monster.TakeDamage(mercDmg);
+                combatMessage = "=>" + mercenary->name + "이(가) " + monster.GetName() + "을(를) 공격했습니다!(데미지 :" + to_string(mercDmg) + ")";
+            }
             
             if (monster.isAlive())
             {

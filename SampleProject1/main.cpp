@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FireGoblin.h"
+#include "Mercenary.h"
 
 
 using namespace std;
@@ -75,10 +76,10 @@ int main()
     
     nextPhase();
     //Player 객체 생성
-    unique_ptr<Player> playerPtr;
-    if (classChoiceInput == 3) playerPtr = make_unique<Barbarian>(userName, isHardcore);
-    else if (classChoiceInput == 7) playerPtr = make_unique<Sorceress>(userName, isHardcore);
-    else playerPtr = make_unique<Player>(userName, charactorClass, isHardcore);
+    shared_ptr<Player> playerPtr;
+    if (classChoiceInput == 3) playerPtr = make_shared<Barbarian>(userName, isHardcore);
+    else if (classChoiceInput == 7) playerPtr = make_shared<Sorceress>(userName, isHardcore);
+    else playerPtr = make_shared<Player>(userName, charactorClass, isHardcore);
     Player& player = *playerPtr;
 
     // --- [ PAGE 2 : Status ] ---
@@ -97,6 +98,12 @@ int main()
     cout << "================================================\n";
 
     nextPhase();
+    shared_ptr<Mercenary> mercenary = make_shared<Mercenary>("도적",12,playerPtr);
+    player.companion = mercenary; // Plyaer <--> Mercenary 연결(순환참조)
+    cout << "use_count playerPtr 참조 수 : " << playerPtr.use_count() <<endl;
+    cout << "use_count mercenary 참조 수 : " << mercenary.use_count() <<endl;
+    //서로 참조하고 있어서 소멸자가 나타나지 않음 (count == 0)이면 delete
+    
     // --- [ PAGE 3 : 전투 ] ---
     
     int pendingExp = 0;
@@ -120,7 +127,7 @@ int main()
         cout << "             '-------'   \n";
         cout << "[시스템] "<< monster->GetName() <<"이(가) 나타났습니다!\n";
         
-        Battle battle(player,*monster);
+        Battle battle(player,*monster, mercenary);
         battle.Run();
         
         if (!player.isAlive()) {

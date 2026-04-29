@@ -8,6 +8,8 @@
 
 using namespace std;
 
+class Mercenary; //전방 선언
+
 class Player : public Character
 {
 private:
@@ -41,7 +43,9 @@ public:
     bool IsHardcore() const { return isHardcore; }
     int GetExp() const { return exp; }
     int GetExpToNextLevel() const { return expToNextLevel; }
-
+    
+    shared_ptr<Mercenary> companion;
+    
     //기능(함수)
     int CriticalAttack() const ;
     virtual string GetAttackMessage() const {return "";}
