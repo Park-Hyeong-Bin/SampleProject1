@@ -1,4 +1,8 @@
 #pragma once
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
 
 class Character
 {
@@ -38,6 +42,7 @@ protected:
     int GetHP() const { return hp; }
     int GetMaxMP() const { return maxMp; }
     int GetMP() const { return mp; }
+    void Heal(int amount) { hp = min(hp+ amount, maxHp);}
     
     //기능(함수)
     bool isAlive() const { return hp > 0;}

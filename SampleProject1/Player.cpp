@@ -73,6 +73,24 @@ void Player::Loot(Item item)
     cout << "인벤토리 capacity" << inventory.capacity() << endl;
 }
 
+bool Player::UseItem(const string& itemName)
+{
+    for (auto it =inventory.begin(); it != inventory.end(); ++it) // iterator사용
+    {
+        if (it->name == itemName)
+        {
+            if (it -> type == ItemType::Consumable)
+            {
+                Heal(maxHp);
+            }
+            it = inventory.erase(it);//erase 후 유효한 iterator반환
+            cout << "인벤토리 size" << inventory.size() << endl;
+            cout << "인벤토리 capacity" << inventory.capacity() << endl;
+            return true;
+        }
+    }
+    return false;
+}
 
 void Player::PrintInventory() const
 {

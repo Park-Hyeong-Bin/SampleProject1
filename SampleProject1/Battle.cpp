@@ -37,7 +37,7 @@ bool Battle::Run()
         cout << "==================================================\n";
         cout << combatMessage << "\n";
         cout << "--------------------------------------------------\n";
-        cout << ">> 1. Attack\n>> 2. Bash Attack\n Select Action : ";
+        cout << ">> 1. Attack\n>> 2. Bash Attack\n >> 3.Use HealingPotion\n Select Action : ";
         cin >> action;
 
         if (action == 1) {
@@ -65,6 +65,17 @@ bool Battle::Run()
             {
                 player.TakeDamage(monster.Attack());
                 combatMessage += "\n=>" + monster.GetAttackMessage() + monster.GetName() + " 이(가) 당신을 공격합니다! (데미지: " + to_string(monster.Attack()) + ")";
+            }
+        }
+        else if (action == 3)
+        {
+            if (player.UseItem("Healing Potion"))
+            {
+                combatMessage += "=> HealingPotion을 사용 했습니다." + to_string(player.GetHP()) + "/" + to_string(player.GetMaxHP());
+            }
+            else
+            {
+                combatMessage = "=> Healing Potion이 없습니다.";
             }
         }
         else {
