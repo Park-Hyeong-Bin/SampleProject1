@@ -11,7 +11,14 @@ Battle::Battle(Player& player, Monster& monster, shared_ptr<Mercenary> mercenary
 bool Battle::Run()
 {
     int action;
-    
+    if (mercenary)
+    {
+        auto ownerPtr = mercenary->owner.lock();
+        if (ownerPtr)
+        {
+            cout << "[" << mercenary->name << "]" << ownerPtr->GetName()<<"님을 위해 싸우겠습니다." << endl;
+        }
+    }
     while (monster.isAlive() && player.isAlive()) {
         
         int monsterHP = monster.GetHP();
