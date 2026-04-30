@@ -75,8 +75,8 @@ void Player::Loot(Item item)
 
 bool Player::UseItem(const string& itemName)
 {
-    auto it = find_if(inventory.begin(), inventory.end(), 
-        [&itemName](const Item& item){ return item.name == itemName; });
+    auto it = find_if(inventory.begin(), inventory.end(),
+        [&itemName](const Item& item) { return item.name == itemName; });
     
     if (it != inventory.end())
     {
@@ -85,9 +85,7 @@ bool Player::UseItem(const string& itemName)
             Heal(maxHp);
         }
         inventory.erase(it);
-        it = inventory.erase(it);//erase 후 유효한 iterator반환
-        cout << "인벤토리 size" << inventory.size() << endl;
-        cout << "인벤토리 capacity" << inventory.capacity() << endl;
+        cout << "[인벤토리] 아이템 사용 후 size = " << inventory.size() << " capacity = " << inventory.capacity() << "\n";
         return true;
     }
     return false;

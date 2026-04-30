@@ -6,14 +6,14 @@ unordered_map<int, ItemData> createItemDB()
 {
     //100번대는 Consumable
     unordered_map<int, ItemData> db;
-    db[101] = {"SmallHealingPotion", ItemType::Consumable};
-    db[102] = {"SmallManaPotion", ItemType::Consumable};
-    db[103] = {"HealingPotion", ItemType::Consumable};
-    db[104] = {"ManaPotion", ItemType::Consumable};
-    db[105] = {"LargeHealingPotion", ItemType::Consumable};
-    db[106] = {"LargeManaPotion", ItemType::Consumable};
-    db[107] = {"OmegaHealingPotion", ItemType::Consumable};
-    db[108] = {"OmegaManaPotion", ItemType::Consumable};
+    db[101] = {"Small Healing Potion", ItemType::Consumable};
+    db[102] = {"Small Mana Potion", ItemType::Consumable};
+    db[103] = {"Healing Potion", ItemType::Consumable};
+    db[104] = {"Mana Potion", ItemType::Consumable};
+    db[105] = {"Large Healing Potion", ItemType::Consumable};
+    db[106] = {"Large Mana Potion", ItemType::Consumable};
+    db[107] = {"Omega Healing Potion", ItemType::Consumable};
+    db[108] = {"Omega Mana Potion", ItemType::Consumable};
     db[109] = {"Elixir", ItemType::Consumable};
     db[110] = {"PowerElixir", ItemType::Consumable};
     

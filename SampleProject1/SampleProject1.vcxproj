@@ -138,6 +138,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterData.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ringbuffer.cpp" />
     <ClCompile Include="Sorceress.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterData.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Ringbuffer.h" />
     <ClInclude Include="Sorceress.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
