@@ -14,6 +14,7 @@
 #include "FireGoblin.h"
 #include "ItemData.h"
 #include "Mercenary.h"
+#include "MonsterData.h"
 
 
 using namespace std;
@@ -110,16 +111,26 @@ int main()
     cout << "use_count mercenary 참조 수 : " << mercenary.use_count() <<endl;
     //서로 참조하고 있어서 소멸자가 나타나지 않음 (count == 0)이면 delete
     
+    //몬스터 DB 메인에 생성
+    unordered_map<string, MonsterData> monsterDB = CreateMonsterDB();
+    
+    
+    
     // --- [ PAGE 3 : 전투 ] ---
     
     int pendingExp = 0;
     vector<unique_ptr<Monster>> monsters ;
-    monsters.push_back(make_unique<Monster>("Goblin", 50, 0 ,15 ,0 ,50, 1, vector<int>{101,102,201,301,401} ));
-    monsters.push_back(make_unique<FireGoblin>("FireGoblin", 50, 0 ,15 ,0 ,50, 1, vector<int>{101,102,203,301,401}));
-    monsters.push_back(make_unique<Monster>("Skeleton", 60, 0 ,20 ,0 ,50, 1 , vector<int>{101,102,201,301,401} ));
-    monsters.push_back(make_unique<Monster>("Wraith", 50, 0 ,25 ,0 ,50, 1 , vector<int>{101,102,201,301,401}));
-    monsters.push_back(make_unique<Monster>("Ghoul", 70, 0 ,35 ,0 ,120, 1 , vector<int>{101,102,201,301,401}));
-    monsters.push_back(make_unique<Monster>("Andariel", 200, 0 ,150 ,0 ,500, 1, vector<int>{101,102,201,301,401}));
+    auto& goblin = monsterDB["Goblin"];
+    auto& fireGoblin = monsterDB["FireGoblin"];
+    auto& skeleton = monsterDB["Skeleton"];
+    auto& ghoul = monsterDB["Ghoul"];
+    auto& dragon = monsterDB["Dragon"];
+    monsters.push_back(make_unique<Monster>("Goblin", goblin.str, goblin.dex ,goblin.vit ,goblin.eng ,goblin.expReward, 1, goblin.dropPool));
+    //monsters.push_back(make_unique<FireGoblin>("FireGoblin", 50, 0 ,15 ,0 ,50, 1, vector<int>{101,102,203,301,401}));
+    //monsters.push_back(make_unique<Monster>("Skeleton", 60, 0 ,20 ,0 ,50, 1 , vector<int>{101,102,201,301,401} ));
+    //monsters.push_back(make_unique<Monster>("Wraith", 50, 0 ,25 ,0 ,50, 1 , vector<int>{101,102,201,301,401}));
+    //monsters.push_back(make_unique<Monster>("Ghoul", 70, 0 ,35 ,0 ,120, 1 , vector<int>{101,102,201,301,401}));
+    //monsters.push_back(make_unique<Monster>("Andariel", 200, 0 ,150 ,0 ,500, 1, vector<int>{101,102,201,301,401}));
     
     for (auto& monster : monsters)
     {
