@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
 #include "Sorceress.h"
 #include "Barbarian.h"
@@ -11,6 +12,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FireGoblin.h"
+#include "ItemData.h"
 #include "Mercenary.h"
 
 
@@ -98,6 +100,10 @@ int main()
     cout << "================================================\n";
 
     nextPhase();
+    
+    //ItemDB 메인에 생성
+    unordered_map<int, ItemData> itemDB = createItemDB();
+    
     shared_ptr<Mercenary> mercenary = make_shared<Mercenary>("도적",12,playerPtr);
     player.companion = mercenary; // Plyaer <--> Mercenary 연결(순환참조)
     cout << "use_count playerPtr 참조 수 : " << playerPtr.use_count() <<endl;
@@ -108,12 +114,12 @@ int main()
     
     int pendingExp = 0;
     vector<unique_ptr<Monster>> monsters ;
-    monsters.push_back(make_unique<Monster>("Goblin", 50, 0 ,15 ,0 ,50));
-    monsters.push_back(make_unique<FireGoblin>("FireGoblin", 50, 0 ,15 ,0 ,50));
-    monsters.push_back(make_unique<Monster>("Skeleton", 60, 0 ,20 ,0 ,50));
-    monsters.push_back(make_unique<Monster>("Wraith", 50, 0 ,25 ,0 ,50));
-    monsters.push_back(make_unique<Monster>("Ghoul", 70, 0 ,35 ,0 ,120));
-    monsters.push_back(make_unique<Monster>("Andariel", 200, 0 ,150 ,0 ,500));
+    monsters.push_back(make_unique<Monster>("Goblin", 50, 0 ,15 ,0 ,50, 1, vector<int>{101,102,201,301,401} ));
+    monsters.push_back(make_unique<FireGoblin>("FireGoblin", 50, 0 ,15 ,0 ,50, 1, vector<int>{101,102,203,301,401}));
+    monsters.push_back(make_unique<Monster>("Skeleton", 60, 0 ,20 ,0 ,50, 1 , vector<int>{101,102,201,301,401} ));
+    monsters.push_back(make_unique<Monster>("Wraith", 50, 0 ,25 ,0 ,50, 1 , vector<int>{101,102,201,301,401}));
+    monsters.push_back(make_unique<Monster>("Ghoul", 70, 0 ,35 ,0 ,120, 1 , vector<int>{101,102,201,301,401}));
+    monsters.push_back(make_unique<Monster>("Andariel", 200, 0 ,150 ,0 ,500, 1, vector<int>{101,102,201,301,401}));
     
     for (auto& monster : monsters)
     {
@@ -153,17 +159,21 @@ int main()
             nextPhase();
             
             //몬스터 처치-> 아이템드롭 -> move로 소유권 이전
-            unique_ptr<Item> dropItem = monster->Drop();
-            if (dropItem)
+            
+            int dropItemId = monster->Drop();
+            if (dropItemId != -1)
             {
-                cout<<"[드롭]" << dropItem->name << " 가 바닥에 떨어졌습니다.\n";
-                player.Loot(move(*dropItem));//소유권 이전
-                cout<<"[로그] dropItem nullptr?" << (dropItem == nullptr ? "Yes" : "No") << endl;
+                ItemData& data = itemDB[dropItemId];
+                Item dropItem(data.name, data.type);//ItemData-> Item객체 생성
+                cout<<"[드롭]" << data.name << " 가 바닥에 떨어졌습니다.\n";
+                player.Loot(move(dropItem));//소유권 이전
+                
             }
             else
             {
                 cout<<"[드롭] 아무것도 드롭되지 않았습니다. \n";
             }
+            player.SortInventory();//아이템 획득 후 이름순 정렬
             player.PrintInventory();
             
             player.GainExp(pendingExp);

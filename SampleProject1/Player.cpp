@@ -110,3 +110,15 @@ void Player::PrintInventory() const
         cout << " > Slot " << i << " < [" << inventory[i].name <<"]\n";
     }
 }
+
+void Player::SortInventory()
+{
+    sort(//<algorithm> 정렬 함수 사용
+        inventory.begin(), inventory.end(),//범위 지정
+        [](const Item& a, const Item& b)//3번째 인자 람다식으로 기준 설정
+        {
+            return a.name<b.name;//a가 b보다 앞에오면 true -> 오름 차순 정렬
+        }
+        );
+    cout <<"[인벤토리] 이름 정렬 완료.\n";
+}
